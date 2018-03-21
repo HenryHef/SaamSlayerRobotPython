@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>SSE3</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.python.pydev.PyDevBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.python.pydev.pythonNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>CELib</name>
+			<type>2</type>
+			<location>/home/henry/workspace/CELib</location>
+		</link>
+		<link>
+			<name>neural_chessboard</name>
+			<type>2</type>
+			<location>/home/henry/workspace/neural_chessboard</location>
+		</link>
+	</linkedResources>
+</projectDescription>
