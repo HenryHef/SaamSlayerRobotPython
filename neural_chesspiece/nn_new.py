@@ -1,6 +1,6 @@
 import tensorflow as tf
 from data_loader import load_dataset
-
+import time
 #from http://adventuresinmachinelearning.com/python-tensorflow-tutorial/
 
 def build_network(ninput,noutput,hidden_layers_sizes=()):
@@ -57,7 +57,7 @@ def create_vars(i_size,h_layers,o_size,epochs = 10,batch_size = 100,):
 
 	return (learning_rate,epochs,batch_size,x,y,y_,y_clipped,cross_entropy,optimiser)
 
-def train_network(dataset,vars,lrate = .03, learning_rate_slow_param = 100.0):
+def train_network(dataset,vars,lrate = .03, learning_rate_slow_param = 500.0):
 	
 	learning_rate,epochs,batch_size,x,y,y_,y_clipped,cross_entropy,optimiser = vars
 	
@@ -103,7 +103,7 @@ def train_network(dataset,vars,lrate = .03, learning_rate_slow_param = 100.0):
 		print("\nTraining complete!")
 		data_test,labels_test = dataset.getTestData()
 		print(sess.run(accuracy, feed_dict={x: data_test, y: labels_test}))
-		save_sess(sess,"/home/henry/workspace/SSE3/neural_chesspiece/nn_new_save")
+		save_sess(sess,"/home/henry/workspace/SSE3/neural_chesspiece/nn_new_savetest")#+str(int(time.time())))
 
 def save_sess(sess,path):
 	# Add ops to save and restore all the variables.
@@ -115,13 +115,38 @@ def restore_sess(sess,path):
 	saver = tf.train.Saver()
 	saver.restore(sess, path)
 
+def loadModel(vars,path):
+	with tf.Session() as sess:
+		learning_rate,epochs,batch_size,x,y,y_,y_clipped,cross_entropy,optimiser = vars
+		
+		init_op = tf.global_variables_initializer()
+
+		# define an accuracy assessment operation
+		correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
+		accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+	
+		# add a summary to store the accuracy
+		tf.summary.scalar('accuracy', accuracy)
+	
+		merged = tf.summary.merge_all()
+		print("starting")
+	
+		restore_sess(sess,path)
+	
+		data_test,labels_test = dataset.getTestData()
+		print("Accuracy:",sess.run(accuracy, feed_dict={x: data_test, y: labels_test}))
+		
 if __name__ == "__main__":
 	# run_simple_graph()
 	# run_simple_graph_multiple()
 	# simple_with_tensor_board()
 
 # 	mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
-	path_train  = "/home/henry/workspace/SSE3/neural_chesspiece/data/"
+	path_train  = "/home/henry/workspace/SSE3/neural_chesspiece/data_validation/"
 	dataset,i_size,o_size = load_dataset(path_train)
-	train_network(dataset,create_vars(i_size,(400,),o_size,epochs = 1000,batch_size = 20))
-				
+	vars=create_vars(i_size,(400,),o_size, epochs = 1000, batch_size = 20)
+# 	loadModel(vars,"/home/henry/workspace/SSE3/neural_chesspiece/nn_new_savetest")
+	train_network(dataset,vars,lrate = .005, learning_rate_slow_param = 500.0)
+	#Epoch: 661  cost = 0.16895  -.0002 Accuracy: 0.97637796
+	#Epoch: 151  cost = 0.65307  Accuracy: 0.9133858
+		

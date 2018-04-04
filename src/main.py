@@ -1,11 +1,8 @@
 import time
-# from detector import detect_img
-# import chess_engin as ce
+import chess_engin as ce
 import cv2 as cv
 from robot import Robot, startAndGetCMDThread
-# from camera import Camera
-# from photostream_manager import create_training_data
-import numpy as np
+from photostream_manager import FrameStreamProccesor
 
 
 
@@ -47,14 +44,18 @@ def readVideo():
 	cap.release()
 	cv.destroyAllWindows()
 def recordVideo():
+	print('h0')
 	cap = cv.VideoCapture(1)
 	
 	# Define the codec and create VideoWriter object
 	fourcc = cv.VideoWriter_fourcc(*'XVID')
-	out = cv.VideoWriter('output2.avi',fourcc, 20.0, (640,480))
+	print('h1')
+	out = cv.VideoWriter('output_color_'+str(int(time.time()))+'.avi',fourcc, 20.0, (640,480))
 	
+	print('h2')
 	while(cap.isOpened()):
 		ret, frame = cap.read()
+		print('h')
 		if ret==True:
 	
 			# write the flipped frame
@@ -70,4 +71,102 @@ def recordVideo():
 	cap.release()
 	out.release()
 	cv.destroyAllWindows()
-recordVideo()
+def showVideo():
+	print('h0')
+	cap = cv.VideoCapture(1)
+	
+	# Define the codec and create VideoWriter object
+# 	fourcc = cv.VideoWriter_fourcc(*'XVID')
+# 	print('h1')
+# 	out = cv.VideoWriter('output_test_'+str(int(time.time()))+'.avi',fourcc, 20.0, (640,480))
+	
+	print('h2')
+	while(cap.isOpened()):
+		ret, frame = cap.read()
+		print('h')
+		if ret==True:
+	
+			# write the flipped frame
+# 			out.write(frame)
+	
+			cv.imshow('frame',frame)
+			if cv.waitKey(1) & 0xFF == ord('q'):
+				break
+		else:
+			break
+	
+	# Release everything if job is finished
+	cap.release()
+# 	out.release()
+	cv.destroyAllWindows()
+# recordVideo()
+
+# recordVideo()
+
+#Rook: 42 mm
+#pawn:45
+#kinght 55
+#bishop 65
+#queen 78
+#king 96
+
+# 
+# class TimePaddedStream:
+# 	def __init__(self):
+# 		self.forward_frames=30
+# 		
+# 
+# cg=ce.ChessGame()
+# cap = cv.VideoCapture('/home/henry/workspace/SSE3/src/good1.avi')
+# 
+# fframe=None
+# isfframe=False
+# fsp=FrameStreamProccesor(cg)
+# ct=0
+# import time
+# while(cap.isOpened()):
+# 	ct+=1
+# 	ret, frame = cap.read()
+# 	if(ret==False):
+# 		break
+# # 	if(ct==100):
+# # 		cv.imwrite("image_"+str(int(time.time()))+".jpg",frame)
+# # 		break
+# 	fsp.process_frame(frame)
+# 	if cv.waitKey(1) & 0xFF == ord('q'):
+# 		break
+# 
+# cap.release()
+# cv.destroyAllWindows()
+
+
+
+
+# cap = cv.VideoCapture(1)
+# import time
+# # Define the codec and create VideoWriter object
+# fourcc = cv.VideoWriter_fourcc(*'XVID')
+# out = cv.VideoWriter('output'+str(int(time.time()))+'.avi',fourcc, 20.0, (640,480))
+# cg=ce.ChessGame()
+# fsp=FrameStreamProccesor(cg)
+# 
+# while(cap.isOpened()):
+# 	ret, frame = cap.read()
+# 	if ret==True:
+# 
+# 		# write the flipped frame
+# 		out.write(frame)
+# 		fsp.process_frame(frame)
+# 
+# 		cv.imshow('frame',frame)
+# 		if cv.waitKey(1) & 0xFF == ord('q'):
+# 			break
+# 	else:
+# 		break
+# 
+# # Release everything if job is finished
+# cap.release()
+# out.release()
+# cv.destroyAllWindows()
+
+

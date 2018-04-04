@@ -1,2 +1,2 @@
-model_checkpoint_path: "/home/henry/workspace/SSE3/neural_chesspiece/nn_new_save"
-all_model_checkpoint_paths: "/home/henry/workspace/SSE3/neural_chesspiece/nn_new_save"
+model_checkpoint_path: "/home/henry/workspace/SSE3/neural_chesspiece/nn_new_savetest"
+all_model_checkpoint_paths: "/home/henry/workspace/SSE3/neural_chesspiece/nn_new_savetest"
